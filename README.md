@@ -23,7 +23,7 @@ tldr kustomize
 cd workdir
 BASE=$(pwd)
 
-CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master"
+CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master/workbase"
 
 curl -s -o "$BASE/#1" "$CONTENT/base\
 /{deployment.yaml,configMap.yaml,service.yaml}"
@@ -101,6 +101,12 @@ configMapGenerator:
 - literals:
   - db_host=localhost
   name: my-configmap
+```
+
+```shell script
+kustomize build . | grep my-configmap 
+# Then add a literal and
+kustomize build . | grep my-configmap 
 ```
 
 ### Image
