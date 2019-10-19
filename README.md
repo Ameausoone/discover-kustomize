@@ -10,7 +10,7 @@
 ## Cli
 
 ``` shell script
-tldr kustomize 
+tldr kustomize
 ```
 
 # Usage 
@@ -19,9 +19,27 @@ tldr kustomize
 
 ### Create
 ```shell script
+# download resources
+cd workdir
+BASE=$(pwd)
+
+CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master"
+
+curl -s -o "$BASE/#1" "$CONTENT/base\
+/{deployment.yaml,configMap.yaml,service.yaml}"
+
 kustomize create --resources deployment.yaml,service.yaml
 kustomize create --autodetect
 kustomize build . 
+```
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configMap.yaml
+  - deployment.yaml
+  - service.yaml
 ```
 
 ### Apply
@@ -41,42 +59,64 @@ Since [v1.14][kubectl announcement] the kustomize build system has been included
 | v1.15.x | [v2.0.3](https://github.com/kubernetes-sigs/kustomize/tree/v2.0.3) |
 | v1.14.x | [v2.0.3](https://github.com/kubernetes-sigs/kustomize/tree/v2.0.3) |
 
-### Edit
-```shell script
-kustomize edit set nameprefix 
-```
-
 ## Features
 
-### Prefix
-
-```yaml
-
+### Prefix,Suffix
+```shell script
+kustomize edit set nameprefix acme-
 ```
 
-### Annotation
+```yaml
+namePrefix: acme-
+```
 
-### Labels
+```shell script
+diff <(kustomize build ../iso) <(kustomize build .)
+```
+
+### Annotation,Labels
+```shell script
+kustomize edit add annotation "application:front"
+kustomize edit add label "env:dev"
+```
+
+```yaml
+commonAnnotations:
+  application: front
+commonLabels:
+  env: dev
+```
+
+```shell script
+diff <(kustomize build ../iso) <(kustomize build .)
+```
 
 ### ConfigmapGenerator
+```shell script
+kustomize edit add configmap my-configmap --from-literal=db_host=localhost
+```
+
+```yaml
+configMapGenerator:
+- literals:
+  - db_host=localhost
+  name: my-configmap
+```
 
 ### Image
 
- 
-
 ```
 
 ```
 
-prefix
-annotation
-labels
+## Overlays
 
-configmapgenerator (or secretgenerator)
-image
-overlays
+### Merge
 
+## Remote resources
 
-real problems 
+# Integration
 
-cloud build 
+## Skaffold
+
+## Cloud build 
