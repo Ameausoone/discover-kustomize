@@ -71,7 +71,7 @@ namePrefix: acme-
 ```
 
 ```shell script
-diff <(kustomize build ../iso) <(kustomize build .)
+diff -u <(kustomize build ../iso) <(kustomize build .)
 ```
 
 ### Annotation,Labels
@@ -88,7 +88,7 @@ commonLabels:
 ```
 
 ```shell script
-diff <(kustomize build ../iso) <(kustomize build .)
+diff -u <(kustomize build ../iso) <(kustomize build .)
 ```
 
 ### ConfigmapGenerator
@@ -111,13 +111,27 @@ kustomize build . | grep my-configmap
 
 ### Image
 
+```shell script
+kustomize edit set image nginx:1.16
 ```
 
+```yaml
+images:
+- name: nginx
+  newTag: 1.16
 ```
 
-## Overlays
+```shell script
+kustomize build . | grep nginx 
+```
 
-### Merge
+## Overlays and merge
+
+```shell script
+cd iso
+diff -u <(kustomize build base) <(kustomize build overlays/staging)
+diff -u <(kustomize build overlays/staging) <(kustomize build overlays/production)
+```
 
 ## Remote resources
 
