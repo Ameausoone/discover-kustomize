@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: the-deployment
 spec:
+  selector:
+    matchLabels:
+      deployment: hello
   replicas: 2
   template:
     metadata:
