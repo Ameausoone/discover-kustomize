@@ -1,0 +1,14 @@
+resources:
+- github.com/Ameausoone/discover-kustomize/iso/base?ref=master
+namePrefix: remote-
+configMapGenerator:
+  - name: my-config
+    literals:
+      - my-config=toto
+      - titi=toto
+      - truc=machin
+patchesStrategicMerge:
+  - deployment.yaml
+images:
+  - name: nginx
+    newTag: "1.16"

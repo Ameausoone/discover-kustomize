@@ -105,7 +105,7 @@ configMapGenerator:
 
 ```shell script
 kustomize build . | grep my-configmap 
-# Then add a literal and
+# Then add a literal and run
 kustomize build . | grep my-configmap 
 ```
 
@@ -133,10 +133,20 @@ diff -u <(kustomize build base) <(kustomize build overlays/staging)
 diff -u <(kustomize build overlays/staging) <(kustomize build overlays/production)
 ```
 
-## Remote resources
+## Remote targets
+
+```shell script
+cd remoteTargets
+kustomize build .
+```
 
 # Integration
 
 ## Skaffold
+
+```shell script
+cd skaffold
+skaffold dev
+```
 
 ## Cloud build 

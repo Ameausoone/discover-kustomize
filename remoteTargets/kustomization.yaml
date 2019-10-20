@@ -1,0 +1,3 @@
+resources:
+- github.com/Ameausoone/discover-kustomize/iso/base?ref=master
+namePrefix: remote-
