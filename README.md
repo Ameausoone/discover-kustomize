@@ -30,12 +30,10 @@ tldr kustomize
 ```shell script
 # download resources
 cd workdir
-BASE=$(pwd)
 
-CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master/workbase"
-
-curl -s -o "$BASE/#1" "$CONTENT/base\
-/{deployment.yaml,configMap.yaml,service.yaml}"
+BASE=$(pwd) && \
+CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master/workbase" && \
+curl -s -o "$BASE/#1" "$CONTENT/base/{deployment.yaml,configMap.yaml,service.yaml}" 
 
 kustomize create --resources deployment.yaml,service.yaml
 kustomize create --autodetect
