@@ -16,7 +16,7 @@ inspired by [DAM].
 * https://github.com/kubernetes-sigs/kustomize/blob/master/examples
 * https://kubectl.docs.kubernetes.io/pages/examples/kustomize.html
 
-## Cli
+## tldr
 
 ``` shell script
 tldr kustomize
