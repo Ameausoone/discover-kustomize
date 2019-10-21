@@ -2,8 +2,17 @@
 
 ## What is it ?
 
+`kustomize` lets you customize raw, template-free YAML
+files for multiple purposes, leaving the original YAML
+untouched and usable as is.
+
+This tool is sponsored by [sig-cli] ([KEP]), and
+inspired by [DAM].
+
 ## Links
 
+* https://kustomize.io/
+* https://github.com/kubernetes-sigs/kustomize
 * https://github.com/kubernetes-sigs/kustomize/blob/master/examples
 * https://kubectl.docs.kubernetes.io/pages/examples/kustomize.html
 
@@ -150,3 +159,9 @@ skaffold dev
 ```
 
 ## Cloud build 
+
+
+
+[sig-cli]: https://github.com/kubernetes/community/blob/master/sig-cli/README.md
+[KEP]: https://github.com/kubernetes/enhancements/blob/master/keps/sig-cli/0008-kustomize.md
+[DAM]: https://github.com/kubernetes-sigs/kustomize/blob/master/docs/glossary.md#declarative-application-management
