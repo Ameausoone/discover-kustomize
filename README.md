@@ -12,7 +12,7 @@ inspired by [DAM].
 * Generate Kubernetes resources file
 * Pure-yaml
 * Template-free
-* Kustomize "understand" kubernetes
+* Kustomize "understands" kubernetes
 * "Overlay"
 
 ## Links
