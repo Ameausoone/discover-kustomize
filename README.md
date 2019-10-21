@@ -35,9 +35,11 @@ BASE=$(pwd) && \
 CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master/workbase" && \
 curl -s -o "$BASE/#1" "$CONTENT/base/{deployment.yaml,configMap.yaml,service.yaml}" 
 
+tail -n +1 *
+
 kustomize create --resources deployment.yaml,service.yaml
-kustomize create --autodetect
 kustomize build . 
+kustomize create --autodetect
 ```
 
 ```yaml
@@ -51,7 +53,8 @@ resources:
 
 ### Apply
 ```shell script
-kubectl apply -k
+# Generate with kubectl 
+kubectl apply -k . --dry-run -o yaml
 # but
 kustomize build . | kubectl apply -f - 
 ```
@@ -78,7 +81,7 @@ namePrefix: acme-
 ```
 
 ```shell script
-diff -u <(kustomize build ../iso) <(kustomize build .)
+diff -u <(kustomize build ../iso/base) <(kustomize build .)
 ```
 
 ### Annotation,Labels
