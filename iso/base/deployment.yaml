@@ -17,6 +17,10 @@ spec:
         image: nginx:alpine
         ports:
         - containerPort: 8080
+        envFrom:
+          - configMapRef:
+             name: my-configmap
+             optional: true
         env:
         - name: ALT_GREETING
           valueFrom:

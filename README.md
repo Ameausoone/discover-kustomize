@@ -98,7 +98,7 @@ commonLabels:
 ```
 
 ```shell script
-diff -u <(kustomize build ../iso) <(kustomize build .)
+diff -u <(kustomize build ../iso/base) <(kustomize build .)
 ```
 
 ### ConfigmapGenerator
