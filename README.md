@@ -9,6 +9,12 @@ untouched and usable as is.
 This tool is sponsored by [sig-cli] ([KEP]), and
 inspired by [DAM].
 
+* Generate Kubernetes resources file
+* Pure-yaml
+* Template-free
+* Kustomize "understand" kubernetes
+* "Overlay"
+
 ## Links
 
 * https://kustomize.io/
