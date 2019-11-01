@@ -1,1 +1,6 @@
 *
+
+!deployment.yaml
+!configMap.yaml
+!service.yaml
+!a
