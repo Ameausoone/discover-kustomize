@@ -103,7 +103,12 @@ kustomize build . | kubectl apply -f -
 
 ---
 
-<h1>Terminal</h1>
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Nameprefix</h1>
 
 <split-view>
 <web-term path="workdir"></web-term>
@@ -113,42 +118,168 @@ kustomize build . | kubectl apply -f -
 # Edit nameprefix
 kustomize edit set nameprefix acme-
 </code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+namePrefix: acme-
+</code>
 </pre>
 
 </split-view>
 
 ---
 
-<h1>Shell &amp; Browser - <strong>Type `python -m SimpleHTTPServer` in the shell window</strong></h1>
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Annotation,Labels</h1>
 
 <split-view>
-    <web-term path="folder"></web-term>
-    <web-browser src="http://localhost:8888/"></web-browser>
+<web-term path="workdir"></web-term>
+
+<pre>
+<code class="hljs shellscript">
+# Edit annotation,label
+kustomize edit add annotation "application:front"
+kustomize edit add label "env:dev"
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+commonAnnotations:
+  application: front
+commonLabels:
+  env: dev
+</code>
+</pre>
+
 </split-view>
 
 ---
 
-<h1>Code samples</h1>
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>ConfigmapGenerator</h1>
 
 <split-view>
-    <source-code folder="sources"
-        files="main.go pod.yaml"
-        start-lines="26;18,21"
-        end-lines="27;18,22">
+    <web-term path="workdir"></web-term>
+
+    <pre>
+<code class="hljs shellscript">
+# Add configmap
+kustomize edit add configmap my-configmap \
+--from-literal=db_host=localhost
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+configMapGenerator:
+- name: my-configmap
+  literals:
+  - db_host=localhost
+
+</code>
+</pre>
+
+</split-view>
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Image</h1>
+
+<split-view>
+    <web-term path="workdir"></web-term>
+
+    <pre>
+<code class="hljs shellscript">
+# Edit image
+kustomize edit set image nginx:1.16
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+images:
+- name: nginx
+  newTag: 1.16
+
+</code>
+</pre>
+
+</split-view>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Overlays and merge</h1>
+
+<split-view>
+    <web-term path="iso"></web-term>
+
+
+<source-code folder="iso/overlays/production"
+             files="kustomization.yaml deployment.yaml"
+             start-lines="26"
+             end-lines="27">
+</source-code>
+
+</split-view>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Remote targets</h1>
+
+<split-view>
+<web-term path="remoteTargets"></web-term>
+
+<source-code folder="remoteTargets"
+             files="kustomization.yaml"
+             start-lines="4"
+             end-lines="4">
+</source-code>
+
+</split-view>
+
+---
+<h1>Integration : Skaffold</h1>
+
+<split-view>
+
+    <source-code folder="skaffold"
+                 files="kustomization.yaml deployment.yaml skaffold.yaml skaffold-kustomize-args.yaml"
+                 start-lines="4"
+                 end-lines="4">
     </source-code>
+
 </split-view>
 
 ---
+<h1>Integration : Skaffold</h1>
 
-<h1>Draw on slides</h1>
+<split-view>
+    <web-term path="skaffold"></web-term>
 
-<p>On the left border of the page there's a pen that can be used to draw on the slides. Type <em>&lt;ESC&gt;</em> to exit draw mode.</p>
+    <web-browser src="http://localhost:8080/"></web-browser>
 
-<img src="/images/bazel.png" />
-<script src="/js/draw.js"></script>
-
-<style>
-    img {
-        height: 75%;
-    }
-</style>
+</split-view>
