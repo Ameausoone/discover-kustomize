@@ -1,14 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 resources:
 - github.com/Ameausoone/discover-kustomize/iso/base?ref=master
+
 namePrefix: remote-
+
+patchesStrategicMerge:
+  - deployment.yaml
+
 configMapGenerator:
   - name: my-config
     literals:
-      - my-config=toto
-      - titi=toto
-      - truc=machin
-patchesStrategicMerge:
-  - deployment.yaml
+      - app_env=dev
+      - app_db_host=dbhost
+      - app_demo=cncfmeetup
+
 images:
   - name: nginx
-    newTag: "1.16"
+    newTag: latest
+    newName: ameausoone/env
