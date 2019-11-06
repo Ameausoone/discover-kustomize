@@ -1,0 +1,259 @@
+<h2>Kustomize</h2>
+
+---
+
+<h1>/me</h1>
+
+<h2>Antoine Méausoone</h2>
+<h2><a href="https://twitter.com/ameausoone">@ameausoone</a></h2>
+<h3><a href="https://www.welcometothejungle.com/en/companies/sfeir"><img src="images/sfeir-logo.png"></a> </h3>
+
+---
+
+<h1> Kustomize</h1>
+
+<h2>kustomize lets you customize raw, template-free YAML
+files for multiple purposes, leaving the original YAML
+    untouched and usable as is.</h2>
+
+<h2>This tool is sponsored by sig-cli.</h2>
+
+---
+
+<h2>* Generate Kubernetes resources file</h2>
+<h2>* Pure-yaml</h2>
+<h2>* Template-free</h2>
+<h2>* Kustomize "understands" kubernetes</h2>
+<h2>* "Overlay"</h2>
+
+---
+
+<h1> Links </h1>
+
+<h2>* <a href="https://kustomize.io/">https://kustomize.io/</a></h2>
+<h2>* <a href="https://github.com/kubernetes-sigs/kustomize">https://github.com/kubernetes-sigs/kustomize</a></h2>
+<h2>* <a href="https://github.com/kubernetes-sigs/kustomize/blob/master/examples">https://github.com/kubernetes-sigs/kustomize/blob/master/examples</a></h2>
+<h2>* <a href="https://kubectl.docs.kubernetes.io/pages/examples/kustomize.html">https://kubectl.docs.kubernetes.io/pages/examples/kustomize.html</a></h2>
+
+---
+
+<h2>CLI</h2>
+
+---
+
+<h1>tldr</h1>
+<h2>$ tldr kustomize</h2>
+---
+
+<h1>Create</h1>
+
+<split-view>
+    <web-term path="workdir"></web-term>
+    <pre>
+        <h3>$ kustomize create --resources deployment.yaml,service.yaml</h3>
+        <h3>$ kustomize build .</h3>
+        <h3>$ kustomize create --autodetect</h3>
+    </pre>
+
+</split-view>
+
+---
+
+<h1>kustomization.yaml</h1>
+<split-view>
+<source-code folder="iso/base"
+             files="kustomization.yaml"
+             start-lines="26"
+             end-lines="27">
+</source-code>
+</split-view>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>kubectl integration (BUT)</h1>
+<split-view>
+    <pre>
+<pre>Since v1.14 the kustomize build system has
+    been included in kubectl.</pre>
+
+<img src="/images/kubectl_integration.png">
+</pre>
+
+<pre>
+<code class="hljs shellscript">
+# Generate with kubectl
+kubectl apply -k . --dry-run -o yaml
+
+# BUT
+kustomize build . | kubectl apply -f -
+</code>
+</pre>
+</split-view>
+
+<style>
+    img {
+        height: 50%;
+    }
+</style>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Nameprefix</h1>
+
+<split-view>
+<web-term path="workdir"></web-term>
+
+<pre>
+<code class="hljs shellscript">
+# Edit nameprefix
+kustomize edit set nameprefix acme-
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+namePrefix: acme-
+</code>
+</pre>
+
+</split-view>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>Annotation,Labels</h1>
+
+<split-view>
+<web-term path="workdir"></web-term>
+
+<pre>
+<code class="hljs shellscript">
+# Edit annotation,label
+kustomize edit add annotation "application:front"
+kustomize edit add label "env:dev"
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+commonAnnotations:
+  application: front
+commonLabels:
+  env: dev
+</code>
+</pre>
+
+</split-view>
+
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>ConfigmapGenerator</h1>
+
+<split-view>
+    <web-term path="workdir"></web-term>
+
+    <pre>
+<code class="hljs shellscript">
+# Add configmap
+kustomize edit add configmap my-configmap \
+--from-literal=db_host=localhost
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+configMapGenerator:
+- name: my-configmap
+  literals:
+  - db_host=localhost
+
+</code>
+</pre>
+
+</split-view>
+---
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<h1>ConfigmapGenerator</h1>
+
+<split-view>
+    <web-term path="workdir"></web-term>
+
+    <pre>
+<code class="hljs shellscript">
+# Add configmap
+kustomize edit add configmap my-configmap \
+--from-literal=db_host=localhost
+</code>
+
+<code class="hljs yaml">
+kind: Kustomization
+...
+configMapGenerator:
+- name: my-configmap
+  literals:
+  - db_host=localhost
+
+</code>
+</pre>
+
+</split-view>
+
+---
+
+<h1>Shell &amp; Browser - <strong>Type `python -m SimpleHTTPServer` in the shell window</strong></h1>
+
+<split-view>
+    <web-term path="folder"></web-term>
+    <web-browser src="http://localhost:8888/"></web-browser>
+</split-view>
+
+---
+
+<h1>Code samples</h1>
+
+<split-view>
+    <source-code folder="sources"
+        files="main.go pod.yaml"
+        start-lines="26;18,21"
+        end-lines="27;18,22">
+    </source-code>
+</split-view>
+
+---
+
+<h1>Draw on slides</h1>
+
+<p>On the left border of the page there's a pen that can be used to draw on the slides. Type <em>&lt;ESC&gt;</em> to exit draw mode.</p>
+
+<img src="/images/bazel.png" />
+<script src="/js/draw.js"></script>
+
+<style>
+    img {
+        height: 75%;
+    }
+</style>
