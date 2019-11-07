@@ -52,17 +52,37 @@ files for multiple purposes, leaving the original YAML
 <h2>$ tldr kustomize</h2>
 ---
 
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+
 <h1>Create</h1>
 
 <split-view>
     <web-term path="workdir"></web-term>
+
     <pre>
-        <h3>$ kustomize create --resources deployment.yaml,service.yaml</h3>
-        <h3>$ kustomize build .</h3>
-        <h3>$ kustomize create --autodetect</h3>
-    </pre>
+<code class="hljs shellscript">
+# Specify resources
+kustomize create --resources deployment.yaml,service.yaml,configMap.yaml
+
+# Build
+kustomize build .
+
+# Autodetect
+kustomize create --autodetect
+</code>
+</pre>
 
 </split-view>
+
+<style>
+    h3 {
+        font-size: x-large;
+    }
+</style>
 
 ---
 
@@ -85,8 +105,8 @@ files for multiple purposes, leaving the original YAML
 <h1>kubectl integration (BUT)</h1>
 <split-view>
     <pre>
-<pre>Since v1.14 the kustomize build system has
-    been included in kubectl.</pre>
+<h3>Since v1.14 the kustomize build system has
+    been included in kubectl.</h3>
 
 <img src="/images/kubectl_integration.png">
 </pre>
@@ -106,6 +126,9 @@ kustomize build . | kubectl apply -f -
     img {
         height: 50%;
     }
+     h3 {
+         font-size: x-large;
+     }
 </style>
 
 ---
@@ -290,3 +313,25 @@ images:
     <web-browser src="http://localhost:8080/"></web-browser>
 
 </split-view>
+
+---
+
+<h1>Github Actions</h1>
+
+<source-code folder="githubactions"
+             files="staging.yml"
+             start-lines="24"
+             end-lines="29">
+</source-code>
+
+---
+
+<h1>?</h1>
+
+<h2>Questions ?</h2>
+
+---
+
+<h1>!</h1>
+
+<h2>Thx !</h2>

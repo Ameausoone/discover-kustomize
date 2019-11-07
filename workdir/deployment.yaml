@@ -6,6 +6,7 @@ spec:
   selector:
     matchLabels:
       deployment: hello
+  replicas: 2
   template:
     metadata:
       labels:
@@ -13,7 +14,7 @@ spec:
     spec:
       containers:
       - name: the-container
-
+        image: nginx:alpine
         ports:
         - containerPort: 8080
         envFrom:

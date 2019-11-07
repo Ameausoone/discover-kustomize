@@ -1,0 +1,29 @@
+name: staging
+
+on:
+  push:
+    paths:
+      - 'staging/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Get kubeconfig file from GKE
+        uses: machine-learning-apps/gke-kubeconfig@master
+        with:
+          application_credentials: ${{ secrets.APPLICATION_CREDENTIALS }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          location_zone: ${{ secrets.LOCATION_ZONE }}
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+      - name: Kubernetes toolset
+        uses: stefanprodan/kube-tools@v1.0.0
+        env:
+          KUBECONFIG: '/github/workspace/.kube/config'
+        with:
+          kubectl: 1.16.2
+          kustomize: 3.2.3
+          command: |
+            kustomize build staging | kubectl apply --dry-run -o yaml -f -
+            kustomize build staging | kubectl apply -f -
