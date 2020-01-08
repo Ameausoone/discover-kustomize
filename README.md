@@ -1,10 +1,14 @@
-# Kustomize 
+# Discover Kustomize 
+
+## Run the prez
+
+Install [demoit], then run `demoit`.
 
 ## What is it ?
 
-`kustomize` lets you customize raw, template-free YAML
-files for multiple purposes, leaving the original YAML
-untouched and usable as is.
+> kustomize lets you customize raw, template-free YAML
+  files for multiple purposes, leaving the original YAML
+  untouched and usable as is.
 
 This tool is sponsored by [sig-cli] ([KEP]), and
 inspired by [DAM].
@@ -22,30 +26,24 @@ inspired by [DAM].
 * https://github.com/kubernetes-sigs/kustomize/blob/master/examples
 * https://kubectl.docs.kubernetes.io/pages/examples/kustomize.html
 
-## tldr
-
-``` shell script
-tldr kustomize
-```
-
 # Usage 
 
 ## Cli
 
-### Create
+### tldr
+
 ```shell script
-# download resources
-cd workdir
+tldr kustomize
+```
 
-BASE=$(pwd) && \
-CONTENT="https://raw.githubusercontent.com/Ameausoone/discover-kustomize/master/workbase" && \
-curl -s -o "$BASE/#1" "$CONTENT/base/{deployment.yaml,configMap.yaml,service.yaml}" 
+### Create
 
-tail -n +1 *
-
+```shell script
 kustomize create --resources deployment.yaml,service.yaml
-kustomize build . 
+# OR 
 kustomize create --autodetect
+# Then
+kustomize build . 
 ```
 
 ```yaml
@@ -58,6 +56,7 @@ resources:
 ```
 
 ### Apply
+
 ```shell script
 # Generate with kubectl 
 kubectl apply -k . --dry-run -o yaml
@@ -165,10 +164,48 @@ cd skaffold
 skaffold dev
 ```
 
-## Cloud build 
+## Github Actions
+
+```yaml
+name: staging
+
+on:
+  push:
+    paths:
+      - 'staging/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Get kubeconfig file from GKE
+        uses: machine-learning-apps/gke-kubeconfig@master
+        with:
+          application_credentials: ${{ secrets.APPLICATION_CREDENTIALS }}
+          project_id: ${{ secrets.PROJECT_ID }}
+          location_zone: ${{ secrets.LOCATION_ZONE }}
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+      - name: Kubernetes toolset
+        uses: stefanprodan/kube-tools@v1.0.0
+        env:
+          KUBECONFIG: '/github/workspace/.kube/config'
+        with:
+          kubectl: 1.16.2
+          kustomize: 3.2.3
+          command: |
+            kustomize build staging | kubectl apply --dry-run -o yaml -f -
+            kustomize build staging | kubectl apply -f -
+```
+
+## IntelliJ
+
+[Plugin Jetbrains Kubernetes]
 
 
 
 [sig-cli]: https://github.com/kubernetes/community/blob/master/sig-cli/README.md
 [KEP]: https://github.com/kubernetes/enhancements/blob/master/keps/sig-cli/0008-kustomize.md
 [DAM]: https://github.com/kubernetes-sigs/kustomize/blob/master/docs/glossary.md#declarative-application-management
+[demoit]: https://github.com/dgageot/demoit
+[Plugin Jetbrains Kubernetes]: https://plugins.jetbrains.com/plugin/10485-kubernetes/

@@ -17,7 +17,63 @@
 
 ---
 
-<h1> Kustomize</h1>
+<h1>Kubernetes</h1>
+
+<script src="/js/reveal.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/styles/default.css">
+<script>hljs.initHighlightingOnLoad();</script>
+
+<split-view>
+<pre>
+<code class="hljs yaml">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+spec:
+  selector:
+    matchLabels:
+      deployment: hello
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        deployment: hello
+    spec:
+      containers:
+      - name: the-container
+        image: nginx:alpine
+        ports:
+          - containerPort: 8080
+</code>
+<code class="hljs yaml">
+kind: Service
+apiVersion: v1
+metadata:
+  name: service
+spec:
+  selector:
+    deployment: hello
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+</code>
+</pre>
+
+<pre>
+<code class="hljs shellscript">
+kubectl apply -f .
+</code>
+</pre>
+
+</split-view>
+
+---
+
+<h1>Kustomize</h1>
 
 <h2>kustomize lets you customize raw, template-free YAML
 files for multiple purposes, leaving the original YAML
@@ -56,7 +112,6 @@ files for multiple purposes, leaving the original YAML
 <script src="/js/highlight.pack.js"></script>
 <link rel="stylesheet" href="/js/styles/default.css">
 <script>hljs.initHighlightingOnLoad();</script>
-
 
 <h1>Create</h1>
 
@@ -119,7 +174,9 @@ kubectl apply -k . --dry-run -o yaml
 # BUT
 kustomize build . | kubectl apply -f -
 </code>
+    <h3> <a href="https://github.com/kubernetes-sigs/kustomize/issues/1500">kustomize#1500</a></h3>
 </pre>
+
 </split-view>
 
 <style>
@@ -212,9 +269,12 @@ kustomize edit add configmap my-configmap \
 kind: Kustomization
 ...
 configMapGenerator:
-- name: my-configmap
+- name: configmap-literals
   literals:
   - db_host=localhost
+- name: configMap-files
+  files:
+  - configs/configfile
 
 </code>
 </pre>
@@ -323,6 +383,14 @@ images:
              start-lines="24"
              end-lines="29">
 </source-code>
+
+---
+
+<h1>IntelliJ</h1>
+
+<h2>IntelliJ</h2>
+
+<h2><a href="https://plugins.jetbrains.com/plugin/10485-kubernetes/">Plugin Jetbrains Kubernetes</a></h2>
 
 ---
 
